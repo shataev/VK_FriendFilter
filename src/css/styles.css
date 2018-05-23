@@ -1,0 +1,28 @@
+@import "~normalize.css";
+@import "../../node_modules/bootstrap/dist/css/bootstrap.css";
+@import "../../node_modules/font-awesome/css/font-awesome.css";
+
+@font-face {
+    font-family: 'fira_sansmedium';
+    src: url('../fonts/firasans-medium-webfont.eot');
+    src: url('../fonts/firasans-medium-webfont.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/firasans-medium-webfont.woff') format('woff'),
+    url('../fonts/firasans-medium-webfont.ttf') format('truetype'),
+    url('../fonts/firasans-medium-webfont.svg#fira_sansmedium') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'fira_sanslight';
+    src: url('../fonts/firasans-light-webfont.eot');
+    src: url('../fonts/firasans-light-webfont.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/firasans-light-webfont.woff') format('woff'),
+    url('../fonts/firasans-light-webfont.ttf') format('truetype'),
+    url('../fonts/firasans-light-webfont.svg#fira_sanslight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
