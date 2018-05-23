@@ -26,3 +26,116 @@
 }
 
 
+/*Заголовок*/
+
+.card.friend-filter {
+    width: 620px;
+    height: 490px;
+    margin: 0 auto;
+}
+
+.card-header.ff-header {
+    font-family: 'fira_sansmedium', sans-serif;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ff8663;
+    color: #fff;
+}
+
+.close-button {
+    color: #fff;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    color: #eee;
+}
+
+
+/*Строка поиска и фильтра друзей*/
+
+.card-body {
+    padding: 0;
+}
+
+.ff-search-wrapper {
+    height: 45px;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px
+}
+
+.ff-search-box.friend-search,
+.ff-search-box.friend-filter {
+    width: 285px;
+    height: 26px;
+}
+
+.btn.btn-outline-secondary.friend-search-btn {
+    color: #9f9f9f;
+    background: #fff!Important;
+    border: none;
+    padding-top: 1px;
+    padding-right: 0px;
+    padding-left: 7px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    box-shadow: none!Important;
+}
+
+.btn.btn-outline-secondary.friend-search-btn:hover {
+    color: #d8d8d8;
+}
+
+.form-control.friend-search-input,
+.form-control.friend-filter-input {
+    color: #9f9f9f;
+    font-size: 13px;
+    border: none;
+    border-radius: 15px;
+    padding-left: 8px;
+    box-shadow: none;
+}
+
+.form-control.friend-filter-input {
+    padding-left: 15px;
+}
+
+
+
+/**Контент*/
+
+.friend-list-wrapper {
+    display: flex;
+}
+
+.friend-list-container {
+    width: 50%;
+}
+
+
+/*Подвал*/
+
+
+.btn.btn-primary.save-button {
+    font-size: 12px;
+    font-family: "fira_sansmedium";
+    width: 87px;
+    height: 30px;
+    background-color: #ff8663!important;
+    border-radius: 10px;
+    border: none;
+    box-shadow: none!Important;
+}
+
+.btn.btn-primary.save-button:hover {
+    opacity: 0.7;
+}
+
+

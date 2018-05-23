@@ -14,62 +14,70 @@
         </section>
         <section class="section-modal">
             <div class="friend-filter-container">
-                <div class="friend-filter">
-                    <header class="ff-header">
+                <div class="card friend-filter">
+                    <header class="card-header ff-header">
                         <div class="ff-header-text">
                             Выберите друзей
                         </div>
-                        <button class="close-button"></button>
+                        <button class="close-button">
+                            <i class="fa fa-times"></i>
+                        </button>
                     </header>
-                    <div class="ff-search-wrapper">
-                        <div class="ff-search-box friend-search">
-                            <i class="fa fa-search"></i>
-                            <input type="text" placeholder="Начните вводить имя друга">
+                    <div class="card-body">
+                        <div class="ff-search-wrapper">
+                            <div class="input-group ff-search-box friend-search">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-outline-secondary friend-search-btn" type="button">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                                <input class="form-control friend-search-input" placeholder="Начните вводить имя друга" aria-label="" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group ff-search-box friend-filter">
+                                <input class="form-control friend-filter-input" placeholder="Название" aria-label="" aria-describedby="basic-addon1">
+                            </div>
                         </div>
-                        <div class="ff-search-box list-search">
-                            <input type="text" placeholder="Название">
+                        <div class="friend-list-wrapper">
+                            <div class="left-list-container friend-list-container">
+                                <div class="list-heading">
+                                    Ваши друзья
+                                </div>
+                                <ul class="friend-list left-friend-list">
+                                    <li class="friend-list-item friend">
+                                        <div class="friend-foto-wrapper">
+                                            <img src="" alt="">
+                                        </div>
+                                        <div class="friend-name">
+                                            Artem Barabanov
+                                        </div>
+                                        <div class="add-friend-button-wrapper">
+                                            <i class="fa fa-plus"></i>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="right-list-container friend-list-container">
+                                <div class="list-heading">
+                                    Друзья в списке
+                                </div>
+                                <ul class="friend-list left-friend-list">
+                                    <li class="friend-list-item friend">
+                                        <div class="friend-foto-wrapper">
+                                            <img src="" alt="">
+                                        </div>
+                                        <div class="friend-name">
+                                            Artem Barabanov
+                                        </div>
+                                        <div class="add-friend-button-wrapper">
+                                            <i class="fa fa-times"></i>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                    <div class="friend-list-wrapper">
-                        <div class="left-list-container friend-list-container">
-                            <div class="list-heading">
-                                Ваши друзья
-                            </div>
-                            <ul class="friend-list left-friend-list">
-                                <li class="friend-list-item friend">
-                                    <div class="friend-foto-wrapper">
-                                        <img src="" alt="">
-                                    </div>
-                                    <div class="friend-name">
-                                        Artem Barabanov
-                                    </div>
-                                    <div class="add-friend-button-wrapper">
-                                        <i class="fa fa-plus"></i>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="right-list-container friend-list-container">
-                            <div class="list-heading">
-                                Друзья в списке
-                            </div>
-                            <ul class="friend-list left-friend-list">
-                                <li class="friend-list-item friend">
-                                    <div class="friend-foto-wrapper">
-                                        <img src="" alt="">
-                                    </div>
-                                    <div class="friend-name">
-                                        Artem Barabanov
-                                    </div>
-                                    <div class="add-friend-button-wrapper">
-                                        <i class="fa fa-times"></i>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <footer class="ff-footer">
-                        <button class="save-button">Сохранить</button>
+                    <footer class="ff-footer card-footer text-muted text-right">
+                        <button class="btn btn-primary save-button">Сохранить</button>
                     </footer>
                 </div>
             </div>
