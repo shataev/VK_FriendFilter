@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Другофильтр</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.js"></script>
+    <script src="https://vk.com/js/api/openapi.js"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <section class="section-main">
+            <div class="logo-container">
+                <div class="logo"></div>
+            </div>
+        </section>
+        <section class="section-modal">
+            <div class="friend-filter-container">
+                <div class="card friend-filter">
+                    <header class="card-header ff-header">
+                        <div class="ff-header-text">
+                            Выберите друзей
+                        </div>
+                        <button class="close-button">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </header>
+                    <div class="card-body">
+                        <div class="ff-search-wrapper">
+                            <div class="input-group ff-search-box friend-search">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-outline-secondary friend-search-btn" type="button">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                                <input class="form-control friend-search-input" placeholder="Начните вводить имя друга" aria-label="" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group ff-search-box friend-filter">
+                                <input class="form-control friend-filter-input" placeholder="Название" aria-label="" aria-describedby="basic-addon1">
+                            </div>
+                        </div>
+                        <div class="friend-list-wrapper">
+                            <div class="left-list-container friend-list-container">
+                                <div class="list-heading">
+                                    Ваши друзья
+                                </div>
+                                <!--<ul class="friend-list left-friend-list">
+                                    <li class="friend-list-item friend">
+                                        <div class="friend-foto-wrapper">
+                                            <img src="" alt="">
+                                        </div>
+                                        <div class="friend-name">
+                                            Artem Barabanov
+                                        </div>
+                                        <div class="add-friend-button-wrapper">
+                                            <i class="fa fa-plus"></i>
+                                        </div>
+                                    </li>
+                                </ul>-->
+                            </div>
+                            <div class="right-list-container friend-list-container">
+                                <div class="list-heading">
+                                    Друзья в списке
+                                </div>
+                                <ul class="friend-list left-friend-list">
+                                    <li class="friend-list-item friend">
+                                        <div class="friend-foto-wrapper">
+                                            <img src="" alt="">
+                                        </div>
+                                        <div class="friend-name">
+                                            Artem Barabanov
+                                        </div>
+                                        <div class="add-friend-button-wrapper">
+                                            <i class="fa fa-times"></i>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="ff-footer card-footer text-muted text-right">
+                        <button class="btn btn-primary save-button">Сохранить</button>
+                    </footer>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script id="user-template" type="text/x-handlebars-template">
+        <ul class="friend-list left-friend-list">
+            {{#each items}}
+            <li class="friend-list-item friend">
+                <div class="friend-foto-wrapper">
+                    <img class="friend-foto" src="{{photo_100}}" alt="">
+                </div>
+                <div class="friend-name">
+                    {{first_name}} {{last_name}}
+                </div>
+                <div class="add-friend-button-wrapper">
+                    <i class="fa fa-plus"></i>
+                </div>
+            </li>
+            {{/each}}
+        </ul>
+    </script>
+    <script src="js/scripts.js"></script>
+</body>
+</html>
