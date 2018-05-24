@@ -6,9 +6,9 @@
     font-family: 'fira_sansmedium';
     src: url('../fonts/firasans-medium-webfont.eot');
     src: url('../fonts/firasans-medium-webfont.eot?#iefix') format('embedded-opentype'),
-    url('../fonts/firasans-medium-webfont.woff') format('woff'),
-    url('../fonts/firasans-medium-webfont.ttf') format('truetype'),
-    url('../fonts/firasans-medium-webfont.svg#fira_sansmedium') format('svg');
+            url('../fonts/firasans-medium-webfont.woff') format('woff'),
+            url('../fonts/firasans-medium-webfont.ttf') format('truetype'),
+            url('../fonts/firasans-medium-webfont.svg#fira_sansmedium') format('svg');
     font-weight: normal;
     font-style: normal;
 
@@ -18,13 +18,19 @@
     font-family: 'fira_sanslight';
     src: url('../fonts/firasans-light-webfont.eot');
     src: url('../fonts/firasans-light-webfont.eot?#iefix') format('embedded-opentype'),
-    url('../fonts/firasans-light-webfont.woff') format('woff'),
-    url('../fonts/firasans-light-webfont.ttf') format('truetype'),
-    url('../fonts/firasans-light-webfont.svg#fira_sanslight') format('svg');
+            url('../fonts/firasans-light-webfont.woff') format('woff'),
+            url('../fonts/firasans-light-webfont.ttf') format('truetype'),
+            url('../fonts/firasans-light-webfont.svg#fira_sanslight') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
+.friend-filter-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+}
 
 /*Заголовок*/
 
@@ -35,13 +41,16 @@
 }
 
 .card-header.ff-header {
-    font-family: 'fira_sansmedium', sans-serif;
     height: 45px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: #ff8663;
     color: #fff;
+}
+
+.ff-header-text {
+    font-family: 'fira_sansmedium', sans-serif;
 }
 
 .close-button {
@@ -119,13 +128,79 @@
     width: 50%;
 }
 
+.friend-list-wrapper {
+    display: flex;
+    align-items: stretch;
+    height: 343px;
+    overflow: hidden;
+}
+
+.friend-list-container {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 15px 0 15px;
+}
+
+.friend-list-container:first-child {
+    border-right: 1px solid #f0f0f0;
+}
+
+.list-heading {
+    font-size: 13px;
+    font-weight: 700;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 5px;
+}
+
+.friend-list.left-friend-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.friend-list-item.friend {
+    display: flex;
+    align-items: center;
+    padding: 7px;
+    cursor: pointer;
+}
+
+.friend-list-item.friend:hover {
+    background-color: #f0f0f0;
+}
+
+.friend-foto-wrapper {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: #edaaed;
+    margin-right: 7px;
+}
+
+.friend-name {
+    flex-grow: 1;
+    font-size: 13px;
+    font-family: 'fira_sansmedium';
+}
+
+.add-friend-button-wrapper {
+    color: #c4c4c4;
+    font-size: 20px;
+}
+
+.add-friend-button-wrapper:hover {
+    opacity: 0.7;
+}
 
 /*Подвал*/
 
 
 .btn.btn-primary.save-button {
     font-size: 12px;
-    font-family: "fira_sansmedium";
+    font-family: "fira_sansmedium", sans-serif;
     width: 87px;
     height: 30px;
     background-color: #ff8663!important;
