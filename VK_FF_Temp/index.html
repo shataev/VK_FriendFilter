@@ -46,37 +46,13 @@
                                 <div class="list-heading">
                                     Ваши друзья
                                 </div>
-                                <!--<ul class="friend-list left-friend-list">
-                                    <li class="friend-list-item friend">
-                                        <div class="friend-foto-wrapper">
-                                            <img src="" alt="">
-                                        </div>
-                                        <div class="friend-name">
-                                            Artem Barabanov
-                                        </div>
-                                        <div class="add-friend-button-wrapper">
-                                            <i class="fa fa-plus"></i>
-                                        </div>
-                                    </li>
-                                </ul>-->
+                                <ul class="friend-list left-friend-list"></ul>
                             </div>
                             <div class="right-list-container friend-list-container">
                                 <div class="list-heading">
                                     Друзья в списке
                                 </div>
-                                <ul class="friend-list left-friend-list">
-                                    <li class="friend-list-item friend">
-                                        <div class="friend-foto-wrapper">
-                                            <img src="" alt="">
-                                        </div>
-                                        <div class="friend-name">
-                                            Artem Barabanov
-                                        </div>
-                                        <div class="add-friend-button-wrapper">
-                                            <i class="fa fa-times"></i>
-                                        </div>
-                                    </li>
-                                </ul>
+                                <ul class="friend-list right-friend-list"></ul>
                             </div>
                         </div>
                     </div>
@@ -89,9 +65,8 @@
     </div>
 
     <script id="user-template" type="text/x-handlebars-template">
-        <ul class="friend-list left-friend-list">
             {{#each items}}
-            <li class="friend-list-item friend">
+            <li class="friend-list-item friend" draggable="true">
                 <div class="friend-foto-wrapper">
                     <img class="friend-foto" src="{{photo_100}}" alt="">
                 </div>
@@ -103,7 +78,6 @@
                 </div>
             </li>
             {{/each}}
-        </ul>
     </script>
     <script src="js/scripts.js"></script>
 </body>

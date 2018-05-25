@@ -37,9 +37,29 @@ auth()
         const template = document.querySelector('#user-template').textContent;
         const render = Handlebars.compile(template);
         const html = render({items: friends.items});
-        const results = document.querySelector('.left-list-container.friend-list-container');
-        let friendListEl = document.createElement('div');
+        const results = document.querySelector('.friend-list.left-friend-list');
+        const dropZone = document.querySelector('.friend-list.right-friend-list');
 
-        friendListEl.innerHTML = html;
-        results.appendChild(friendListEl);
+		results.innerHTML = html;
+
+        results.addEventListener('dragstart', (e) => {
+            if (e.target.classList.contains('friend-list-item')) {
+                let self = e.target;
+				e.dataTransfer.effectAllowed = 'move';
+				e.dataTransfer.setData('Text', self.outerHTML);
+            }
+        });
+
+		dropZone.addEventListener('drop', (e) => {
+            dropZone.innerHTML += e.dataTransfer.getData('Text');
+		});
+
+		dropZone.addEventListener('dragover', (e) => {
+		    if (e.preventDefault) {
+                e.preventDefault();
+            }
+
+			e.dataTransfer.dropEffect = 'move';
+		});
     });
+
