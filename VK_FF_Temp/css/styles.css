@@ -116,7 +116,6 @@
 
 .friend-list-container:first-child {
     border-right: 1px solid #f0f0f0;
-    overflow-y: scroll;
 }
 
 .list-heading {

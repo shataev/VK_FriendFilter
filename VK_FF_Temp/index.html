@@ -10,75 +10,105 @@
     <script src="https://vk.com/js/api/openapi.js"></script>
 </head>
 <body>
-    <div class="wrapper">
-        <section class="section-main">
-            <div class="logo-container">
-                <div class="logo"></div>
-            </div>
-        </section>
-        <section class="section-modal">
-            <div class="friend-filter-container">
-                <div class="card friend-filter">
-                    <header class="card-header ff-header">
-                        <div class="ff-header-text">
-                            Выберите друзей
+<div class="wrapper">
+    <section class="section-main">
+        <div class="logo-container">
+            <div class="logo"></div>
+        </div>
+    </section>
+    <section class="section-modal">
+        <div class="friend-filter-container">
+            <div class="card friend-filter">
+                <header class="card-header ff-header">
+                    <div class="ff-header-text">
+                        Выберите друзей
+                    </div>
+                    <button class="close-button">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </header>
+                <div class="card-body">
+                    <div class="ff-search-wrapper">
+                        <div class="input-group ff-search-box friend-search">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-outline-secondary friend-search-btn" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                            <input class="form-control friend-search-input" placeholder="Начните вводить имя друга" aria-label="" aria-describedby="basic-addon1">
                         </div>
-                        <button class="close-button">
-                            <i class="fa fa-times"></i>
-                        </button>
-                    </header>
-                    <div class="card-body">
-                        <div class="ff-search-wrapper">
-                            <div class="input-group ff-search-box friend-search">
-                                <div class="input-group-prepend">
-                                    <button class="btn btn-outline-secondary friend-search-btn" type="button">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </div>
-                                <input class="form-control friend-search-input" placeholder="Начните вводить имя друга" aria-label="" aria-describedby="basic-addon1">
-                            </div>
-                            <div class="input-group ff-search-box friend-filter">
-                                <input class="form-control friend-filter-input" placeholder="Название" aria-label="" aria-describedby="basic-addon1">
-                            </div>
-                        </div>
-                        <div class="friend-list-wrapper">
-                            <div class="left-list-container friend-list-container">
-                                <div class="list-heading">
-                                    Ваши друзья
-                                </div>
-                                <ul class="friend-list left-friend-list"></ul>
-                            </div>
-                            <div class="right-list-container friend-list-container">
-                                <div class="list-heading">
-                                    Друзья в списке
-                                </div>
-                                <ul class="friend-list right-friend-list"></ul>
-                            </div>
+                        <div class="input-group ff-search-box friend-filter">
+                            <input class="form-control friend-filter-input" placeholder="Начните вводить имя друга" aria-label="" aria-describedby="basic-addon1">
                         </div>
                     </div>
-                    <footer class="ff-footer card-footer text-muted text-right">
-                        <button class="btn btn-primary save-button">Сохранить</button>
-                    </footer>
+                    <div class="friend-list-wrapper">
+                        <div class="left-list-container friend-list-container">
+                            <div class="list-heading">
+                                Ваши друзья
+                            </div>
+                            <ul class="friend-list left-friend-list"></ul>
+                        </div>
+                        <div class="right-list-container friend-list-container">
+                            <div class="list-heading">
+                                Друзья в списке
+                            </div>
+                            <ul class="friend-list right-friend-list"></ul>
+                        </div>
+                    </div>
                 </div>
+                <footer class="ff-footer card-footer text-muted text-right">
+                    <button class="btn btn-primary save-button">Сохранить</button>
+                </footer>
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
+</div>
 
-    <script id="user-template" type="text/x-handlebars-template">
-            {{#each items}}
-            <li class="friend-list-item friend" draggable="true">
-                <div class="friend-foto-wrapper">
-                    <img class="friend-foto" src="{{photo_100}}" alt="">
-                </div>
-                <div class="friend-name">
-                    {{first_name}} {{last_name}}
-                </div>
-                <div class="add-friend-button-wrapper">
-                    <i class="fa fa-plus"></i>
-                </div>
-            </li>
-            {{/each}}
-    </script>
-    <script src="js/scripts.js"></script>
+<script id="user-template" type="text/x-handlebars-template">
+    {{#each items}}
+    <li class="friend-list-item friend"
+        draggable="true"
+        id="{{id}}"
+        data-id="{{id}}"
+        data-photo_100="{{photo_100}}"
+        data-first_name="{{first_name}}"
+        data-last_name="{{last_name}}"
+    >
+        <div class="friend-foto-wrapper">
+            <img class="friend-foto" src="{{photo_100}}" alt="" draggable="false">
+        </div>
+        <div class="friend-name">
+            {{first_name}} {{last_name}}
+        </div>
+        <div class="add-friend-button-wrapper">
+            <i class="fa fa-plus"></i>
+        </div>
+    </li>
+    {{/each}}
+</script>
+
+<script id="user-local-template" type="text/x-handlebars-template">
+    {{#each items}}
+    <li class="friend-list-item friend"
+        draggable="true"
+        id="{{id}}"
+        data-id="{{id}}"
+        data-photo_100="{{photo_100}}"
+        data-first_name="{{first_name}}"
+        data-last_name="{{last_name}}"
+    >
+        <div class="friend-foto-wrapper">
+            <img class="friend-foto" src="{{photo_100}}" alt="" draggable="false">
+        </div>
+        <div class="friend-name">
+            {{first_name}} {{last_name}}
+        </div>
+        <div class="remove-friend-button-wrapper">
+            <i class="fa fa-times"></i>
+        </div>
+    </li>
+    {{/each}}
+</script>
+<script src="js/bundle.js"></script>
 </body>
 </html>
