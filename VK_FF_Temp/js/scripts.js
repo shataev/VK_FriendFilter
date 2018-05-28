@@ -80,25 +80,6 @@ auth()
 
         friendsFilter.init();
 
-        /*filterInput.addEventListener('keyup', e => {
-            results.innerHTML = null;
-
-            let filterValue = filterInput.value;
-            let filteredFriends;
-
-            if (!filterValue) {
-                filteredFriends = friends.items;
-            } else {
-                filteredFriends = friends.items.filter(friend => {
-                    return (isMatching(friend.first_name, filterValue) || isMatching(friend.last_name, filterValue));
-                });
-            }
-
-            const newHtml = render({items: filteredFriends});
-
-            results.innerHTML = newHtml;
-        });*/
-
 		//Drag-n-Drop
         const dropZone = rightFriendList;
 
@@ -108,7 +89,6 @@ auth()
                 const userData = JSON.stringify(self.dataset);
 
                 e.dataTransfer.effectAllowed = 'move';
-                //e.dataTransfer.setData('Text', self.outerHTML);
                 e.dataTransfer.setData('Text', userData);
 
                 ///Готовим переносимого друга на удаление из левого списка
@@ -148,6 +128,33 @@ auth()
 			e.dataTransfer.dropEffect = 'move';
 		});
 
+		//Обработчик добавления друга кликом по кнопке +
+        // todo addEventListener не работает в Promise
+        document.querySelector('.friend-list-wrapper').addEventListener('click', e => {
+           if (e.target.closest('.add-friend-button')) {
+               const friendItem = e.target.closest('.friend');
+               const friendItemDtata = friendItem.dataset;
+
+               friends = friends.filter(item => {
+                   if (item.id !== friendItemDtata.id) {
+                       return item;
+                   }
+               });
+
+               //Добавляем данные о переносимом друге в массив localFriends
+               localFriends.push(friendItemDtata);
+               friendsListLocal.updateData(localFriends);
+
+               ///Удаляем переносимого друга из левого списка
+               friendsList.updateData(friends);
+
+               //Обновляем фильтр друзей из левого блока
+               friendsFilter.updateData(friends);
+           }
+        });
+
+        console.log(getEventListeners(document.querySelector('.friend-list-wrapper')));
+
 		//Кнопка Сохранить
         const saveButton = document.querySelector('.save-button');
 
@@ -157,4 +164,6 @@ auth()
             localStorage.setItem('localFriends', dataToSave);
         })
     });
+
+
 

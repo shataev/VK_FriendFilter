@@ -165,12 +165,14 @@
     font-family: sans-serif;
 }
 
-.add-friend-button-wrapper {
+.add-friend-button,
+.remove-friend-button {
     color: #c4c4c4;
     font-size: 20px;
 }
 
-.add-friend-button-wrapper:hover {
+.add-friend-button:hover,
+.remove-friend-button:hover {
     opacity: 0.7;
 }
 
