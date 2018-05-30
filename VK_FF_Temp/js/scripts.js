@@ -1,5 +1,25 @@
 import Filter from './friendFilter';
 import FriendListBuilder from './friendListBuilder';
+import FriendsManager from './FriendsManager';
+
+let friendsGlobal = [];
+let friendsLocal = [];
+
+//Переносит друга из списка source в список target
+let replaceFriendToTargetList = (source, target, friend) => {
+    source.data = source.data.filter(item => {
+        if (item.id != friend.id) {
+            return item;
+        }
+    });
+
+    //Добавляем данные о переносимом друге в массив friendsLocal
+    target.data.push(friend);
+    target.list.updateData(target.data);
+
+    ///Удаляем переносимого друга из левого списка
+    source.list.updateData(source.data);
+};
 
 VK.init({
     apiId: 6489428
@@ -37,24 +57,27 @@ auth()
         return callAPI('friends.get', {fields: 'photo_100'})
     })
     .then(allFfriends => {
-        let friends = allFfriends.items;
-        let localFriends = localStorage.localFriends ? JSON.parse(localStorage.localFriends) : []; //Массив локальных друзей
         const templateFriend = document.querySelector('#user-template').textContent;
         const templateLocalFriend = document.querySelector('#user-local-template').textContent;
         const leftFriendList = document.querySelector('.friend-list.left-friend-list');
         const rightFriendList = document.querySelector('.friend-list.right-friend-list');
 
+        friendsGlobal = allFfriends.items;
+        friendsLocal = localStorage.friendsLocal ? JSON.parse(localStorage.friendsLocal) : []; //Массив локальных друзей
+
         //Если есть сохраненные друзья, фильтруем полученные данные, чтобы их исключить
-        if (localFriends.length > 0) {
-            localFriends.map(friend => {
-                friends = friends.filter(item => {
-                    return (item.id !== +friend.id);
+        if (friendsLocal.length > 0) {
+            friendsLocal.map(friend => {
+                friendsGlobal = friendsGlobal.filter(item => {
+                    return (item.id != friend.id);
                 })
             })
         }
 
+        let friendManager = new FriendsManager(friendsGlobal, friendsLocal);
+
         //Left friends list
-        const friendsList = new FriendListBuilder(friends, {
+        const friendsList = new FriendListBuilder(friendsGlobal, {
             templateEl: templateFriend,
             containerEl: leftFriendList
         });
@@ -62,7 +85,7 @@ auth()
         friendsList.render();
 
         //Right(local) friends list
-        const friendsListLocal = new FriendListBuilder(localFriends, {
+        const friendsListLocal = new FriendListBuilder(friendsLocal, {
             templateEl: templateLocalFriend,
             containerEl: rightFriendList
         });
@@ -72,7 +95,7 @@ auth()
         //Filter
         const filterInput = document.querySelector('.friend-search-input');
         const friendsFilter = new Filter(filterInput, {
-            data: friends,
+            data: friendsGlobal,
             fields: ['first_name', 'last_name'],
             targetEl: leftFriendList,
             template: templateFriend
@@ -90,15 +113,6 @@ auth()
 
                 e.dataTransfer.effectAllowed = 'move';
                 e.dataTransfer.setData('Text', userData);
-
-                ///Готовим переносимого друга на удаление из левого списка
-                const friendId = +self.id;
-
-                friends = friends.filter(item => {
-                    if (item.id !== friendId) {
-                        return item;
-                    }
-                });
             }
         });
 
@@ -107,17 +121,16 @@ auth()
 		        e.preventDefault();
             }
 
-            //Добавляем данные о переносимом друге в массив localFriends
             let localFriendData = JSON.parse(e.dataTransfer.getData('Text'));
 
-		    localFriends.push(localFriendData);
-            friendsListLocal.updateData(localFriends);
+            friendManager.addToLocal(localFriendData);
 
-            ///Удаляем переносимого друга из левого списка
-            friendsList.updateData(friends);
+            //Обновляем списки друзей
+            friendsListLocal.updateData(friendManager.localData);
+            friendsList.updateData(friendManager.globalData);
 
             //Обновляем фильтр друзей из левого блока
-            friendsFilter.updateData(friends);
+            friendsFilter.updateData(friendManager.globalData);
 		});
 
 		dropZone.addEventListener('dragover', (e) => {
@@ -129,39 +142,42 @@ auth()
 		});
 
 		//Обработчик добавления друга кликом по кнопке +
-        // todo addEventListener не работает в Promise
         document.querySelector('.friend-list-wrapper').addEventListener('click', e => {
            if (e.target.closest('.add-friend-button')) {
                const friendItem = e.target.closest('.friend');
                const friendItemDtata = friendItem.dataset;
 
-               friends = friends.filter(item => {
-                   if (item.id !== friendItemDtata.id) {
-                       return item;
-                   }
-               });
+               friendManager.addToLocal(friendItemDtata);
 
-               //Добавляем данные о переносимом друге в массив localFriends
-               localFriends.push(friendItemDtata);
-               friendsListLocal.updateData(localFriends);
-
-               ///Удаляем переносимого друга из левого списка
-               friendsList.updateData(friends);
+               //Обновляем списки друзей
+               friendsListLocal.updateData(friendManager.localData);
+               friendsList.updateData(friendManager.globalData);
 
                //Обновляем фильтр друзей из левого блока
-               friendsFilter.updateData(friends);
+               friendsFilter.updateData(friendManager.globalData);
+
+           } else if (e.target.closest('.remove-friend-button')) {
+               const friendItem = e.target.closest('.friend');
+               const friendItemDtata = friendItem.dataset;
+
+               friendManager.removeFromLocal(friendItemDtata);
+
+               //Обновляем списки друзей
+               friendsList.updateData(friendManager.globalData);
+               friendsListLocal.updateData(friendManager.localData);
+
+               //Обновляем фильтр друзей из правого блока
+               //friendsFilter.updateData(friendsLocal);
            }
         });
-
-        console.log(getEventListeners(document.querySelector('.friend-list-wrapper')));
 
 		//Кнопка Сохранить
         const saveButton = document.querySelector('.save-button');
 
         saveButton.addEventListener('click', () => {
-            let dataToSave = JSON.stringify(localFriends);
+            let dataToSave = JSON.stringify(friendManager.localData);
 
-            localStorage.setItem('localFriends', dataToSave);
+            localStorage.setItem('friendsLocal', dataToSave);
         })
     });
 
