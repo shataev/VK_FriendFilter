@@ -1,3 +1,5 @@
+//Компонент списка друзей. Создает объект списка с соответствующим фильтром
+
 import Filter from './friendFilter';
 
 class FriendListBuilder {

@@ -58,7 +58,7 @@ auth()
             })
         }
 
-		//Build friendLsts
+		//Данные для фильтров
 		const friendsGlobalFilterInput = document.querySelector('.friend-search-input');
 		const friendsGlobalFilterOPtions = {
 			el: friendsGlobalFilterInput,
@@ -70,13 +70,14 @@ auth()
 			fields: ['first_name', 'last_name']
 		};
 
+		//Списки друзей (глобальный - полученный через VK.api, локальный - наполняемый пользователем)
 		let friendsGlobalList = new FriendListBuilder (friendsGlobal, templateFriend, leftFriendList, friendsGlobalFilterOPtions);
 		let friendsLocalList = new FriendListBuilder (friendsLocal, templateLocalFriend, rightFriendList, friendsLocalFilterOPtions);
 
 		friendsGlobalList.render();
 		friendsLocalList.render();
 
-		//Drag-n-Drop
+		//Инициализация drag-n-drop
 		let friendsGlobalDragDrop = new DragDrop(friendsGlobalList, friendsLocalList);
 
 		friendsGlobalDragDrop.init();
@@ -97,7 +98,7 @@ auth()
            }
         });
 
-		//Кнопка Сохранить
+		//Сохранение данных локального списка друзей по клику на кнопку Сохранить
         const saveButton = document.querySelector('.save-button');
 
         saveButton.addEventListener('click', () => {

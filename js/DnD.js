@@ -1,3 +1,5 @@
+//Компонент drag-n-drop
+
 import {replaceFriend} from './helpers';
 
 class DragDrop {

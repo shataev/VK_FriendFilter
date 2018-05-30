@@ -1,3 +1,5 @@
+//Компонент фильтра списка
+
 import {isMatching} from './helpers';
 
 class FilterValues {

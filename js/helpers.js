@@ -1,3 +1,5 @@
+//Вспомогательные функции, применяемы в других компонентах
+
 //Функция фильтрации строк
 function isMatching(full, chunk) {
 	return (full.toUpperCase().indexOf(chunk.toUpperCase()) >= 0);

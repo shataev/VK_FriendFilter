@@ -1,10 +1,37 @@
 @import url('https://fonts.googleapis.com/css?family=Fira+Sans:300,400,500&subset=cyrillic-ext');
 
-.friend-filter-container {
+.section-main {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 70px;
+}
+
+.logo {
+    background: url('./../img/logo.png') no-repeat;
+    width: 110px;
+    height: 30px;
+
+}
+
+.section-modal {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate3d(-50%, -50%, 0);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.4);
+    min-height: 500px;
+    height: 100vh;
+}
+
+.friend-filter-container {
 }
 
 /*Заголовок*/
@@ -13,6 +40,9 @@
     width: 620px;
     height: 490px;
     margin: 0 auto;
+    border-radius: 10px;
+    overflow: hidden;
+    border: none;
 }
 
 .card-header.ff-header {
@@ -33,6 +63,7 @@
     background: none;
     border: none;
     cursor: pointer;
+    outline: none!Important;
 }
 
 .close-button:hover {
@@ -62,7 +93,7 @@
 }
 
 .btn.btn-outline-secondary.friend-search-btn {
-    color: #9f9f9f;
+    color: #9f9f9f!Important;
     background: #fff!Important;
     border: none;
     padding-top: 1px;
@@ -71,10 +102,7 @@
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
     box-shadow: none!Important;
-}
-
-.btn.btn-outline-secondary.friend-search-btn:hover {
-    color: #d8d8d8;
+    cursor: text;
 }
 
 .form-control.friend-search-input,
