@@ -1,8 +1,19 @@
+import Filter from './friendFilter';
+
 class FriendListBuilder {
-    constructor(data, options) {
+    constructor(data, templateEl, containerEl, filterOptions) {
         this.data = data;
-        this.templateEl = options.templateEl;
-        this.containerEl = options.containerEl;
+        this.templateEl = templateEl;
+        this.containerEl = containerEl;
+        this.filter = new Filter({
+		    el: filterOptions.el,
+		    data: this.data,
+		    fields: filterOptions.fields,
+		    targetEl: this.containerEl,
+		    template: this.templateEl,
+        });
+
+        this.filter.init();
     };
 
     render() {
@@ -21,9 +32,9 @@ class FriendListBuilder {
     updateData(newData) {
         this.data = newData;
         this.render();
+        this.filter.update(this.data);
+        this.filter.filter();
     };
-
-
 }
 
 export default FriendListBuilder;

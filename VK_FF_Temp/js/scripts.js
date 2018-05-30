@@ -1,25 +1,9 @@
-import Filter from './friendFilter';
+import {isMatching, sortFriends, replaceFriend} from "./helpers";
 import FriendListBuilder from './friendListBuilder';
-import FriendsManager from './FriendsManager';
+import DragDrop from './DnD';
 
 let friendsGlobal = [];
 let friendsLocal = [];
-
-//Переносит друга из списка source в список target
-let replaceFriendToTargetList = (source, target, friend) => {
-    source.data = source.data.filter(item => {
-        if (item.id != friend.id) {
-            return item;
-        }
-    });
-
-    //Добавляем данные о переносимом друге в массив friendsLocal
-    target.data.push(friend);
-    target.list.updateData(target.data);
-
-    ///Удаляем переносимого друга из левого списка
-    source.list.updateData(source.data);
-};
 
 VK.init({
     apiId: 6489428
@@ -62,8 +46,8 @@ auth()
         const leftFriendList = document.querySelector('.friend-list.left-friend-list');
         const rightFriendList = document.querySelector('.friend-list.right-friend-list');
 
-        friendsGlobal = allFfriends.items;
-        friendsLocal = localStorage.friendsLocal ? JSON.parse(localStorage.friendsLocal) : []; //Массив локальных друзей
+        friendsGlobal = allFfriends.items.sort(sortFriends);
+        friendsLocal = localStorage.friendsLocal ? JSON.parse(localStorage.friendsLocal).sort(sortFriends) : []; //Массив локальных друзей
 
         //Если есть сохраненные друзья, фильтруем полученные данные, чтобы их исключить
         if (friendsLocal.length > 0) {
@@ -74,100 +58,42 @@ auth()
             })
         }
 
-        let friendManager = new FriendsManager(friendsGlobal, friendsLocal);
+		//Build friendLsts
+		const friendsGlobalFilterInput = document.querySelector('.friend-search-input');
+		const friendsGlobalFilterOPtions = {
+			el: friendsGlobalFilterInput,
+			fields: ['first_name', 'last_name']
+		};
+		const friendsLocalFilterInput = document.querySelector('.friend-filter-input');
+		const friendsLocalFilterOPtions = {
+			el: friendsLocalFilterInput,
+			fields: ['first_name', 'last_name']
+		};
 
-        //Left friends list
-        const friendsList = new FriendListBuilder(friendsGlobal, {
-            templateEl: templateFriend,
-            containerEl: leftFriendList
-        });
+		let friendsGlobalList = new FriendListBuilder (friendsGlobal, templateFriend, leftFriendList, friendsGlobalFilterOPtions);
+		let friendsLocalList = new FriendListBuilder (friendsLocal, templateLocalFriend, rightFriendList, friendsLocalFilterOPtions);
 
-        friendsList.render();
-
-        //Right(local) friends list
-        const friendsListLocal = new FriendListBuilder(friendsLocal, {
-            templateEl: templateLocalFriend,
-            containerEl: rightFriendList
-        });
-
-        friendsListLocal.render();
-
-        //Filter
-        const filterInput = document.querySelector('.friend-search-input');
-        const friendsFilter = new Filter(filterInput, {
-            data: friendsGlobal,
-            fields: ['first_name', 'last_name'],
-            targetEl: leftFriendList,
-            template: templateFriend
-        });
-
-        friendsFilter.init();
+		friendsGlobalList.render();
+		friendsLocalList.render();
 
 		//Drag-n-Drop
-        const dropZone = rightFriendList;
+		let friendsGlobalDragDrop = new DragDrop(friendsGlobalList, friendsLocalList);
 
-        leftFriendList.addEventListener('dragstart', (e) => {
-            if (e.target.classList.contains('friend-list-item')) {
-                const self = e.target;
-                const userData = JSON.stringify(self.dataset);
+		friendsGlobalDragDrop.init();
 
-                e.dataTransfer.effectAllowed = 'move';
-                e.dataTransfer.setData('Text', userData);
-            }
-        });
-
-		dropZone.addEventListener('drop', (e) => {
-		    if (e.preventDefault) {
-		        e.preventDefault();
-            }
-
-            let localFriendData = JSON.parse(e.dataTransfer.getData('Text'));
-
-            friendManager.addToLocal(localFriendData);
-
-            //Обновляем списки друзей
-            friendsListLocal.updateData(friendManager.localData);
-            friendsList.updateData(friendManager.globalData);
-
-            //Обновляем фильтр друзей из левого блока
-            friendsFilter.updateData(friendManager.globalData);
-		});
-
-		dropZone.addEventListener('dragover', (e) => {
-		    if (e.preventDefault) {
-                e.preventDefault();
-            }
-
-			e.dataTransfer.dropEffect = 'move';
-		});
-
-		//Обработчик добавления друга кликом по кнопке +
+		//Обработчик добавления друга кликом по кнопке + и удаления кликом по кнопке х
         document.querySelector('.friend-list-wrapper').addEventListener('click', e => {
            if (e.target.closest('.add-friend-button')) {
                const friendItem = e.target.closest('.friend');
-               const friendItemDtata = friendItem.dataset;
+               const friendDtata = friendItem.dataset;
 
-               friendManager.addToLocal(friendItemDtata);
-
-               //Обновляем списки друзей
-               friendsListLocal.updateData(friendManager.localData);
-               friendsList.updateData(friendManager.globalData);
-
-               //Обновляем фильтр друзей из левого блока
-               friendsFilter.updateData(friendManager.globalData);
+			   replaceFriend(friendsGlobalList, friendsLocalList, friendDtata);
 
            } else if (e.target.closest('.remove-friend-button')) {
                const friendItem = e.target.closest('.friend');
-               const friendItemDtata = friendItem.dataset;
+               const friendDtata = friendItem.dataset;
 
-               friendManager.removeFromLocal(friendItemDtata);
-
-               //Обновляем списки друзей
-               friendsList.updateData(friendManager.globalData);
-               friendsListLocal.updateData(friendManager.localData);
-
-               //Обновляем фильтр друзей из правого блока
-               //friendsFilter.updateData(friendsLocal);
+			   replaceFriend(friendsLocalList, friendsGlobalList, friendDtata);
            }
         });
 
@@ -175,11 +101,9 @@ auth()
         const saveButton = document.querySelector('.save-button');
 
         saveButton.addEventListener('click', () => {
-            let dataToSave = JSON.stringify(friendManager.localData);
+            let dataToSave = JSON.stringify(friendsLocalList.data);
 
             localStorage.setItem('friendsLocal', dataToSave);
         })
     });
-
-
 
