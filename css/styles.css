@@ -112,14 +112,9 @@
     border: none;
     border-radius: 15px;
     padding-left: 8px;
+    padding-bottom: 8px;
     box-shadow: none;
 }
-
-.form-control.friend-filter-input {
-    padding-left: 15px;
-}
-
-
 
 /**Контент*/
 
@@ -139,11 +134,15 @@
 
 .friend-list-container {
     width: 50%;
-    padding: 10px 15px 0 15px;
+    padding: 10px 10px 0 10px;
 }
 
 .friend-list-container:first-child {
     border-right: 1px solid #f0f0f0;
+}
+
+.list-heading-wrapper {
+    padding: 0 6px;
 }
 
 .list-heading {
@@ -156,7 +155,7 @@
 .friend-list.left-friend-list,
 .friend-list.right-friend-list {
     list-style: none;
-    padding: 0;
+    padding: 0 6px;
     margin: 0;
     height: 308px;
     overflow: auto;
@@ -184,6 +183,7 @@
     align-items: center;
     padding: 7px;
     cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
 }
 
 .friend-list-item.friend:hover {
@@ -222,7 +222,6 @@
 }
 
 /*Подвал*/
-
 
 .btn.btn-primary.save-button {
     font-size: 12px;
