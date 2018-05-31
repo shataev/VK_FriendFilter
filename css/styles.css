@@ -162,6 +162,23 @@
     overflow: auto;
 }
 
+/*Скроллбар*/
+::-webkit-scrollbar {
+    width: 3px;
+}
+
+::-webkit-scrollbar-track {
+
+}
+
+::-webkit-scrollbar-thumb {
+    width: 3px;
+    height: 80px;
+    border-radius: 1px;
+    background-color: #c4c4c4;
+}
+/*Скроллбар конец*/
+
 .friend-list-item.friend {
     display: flex;
     align-items: center;
